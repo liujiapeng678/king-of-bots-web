@@ -13,7 +13,7 @@ export class AcGameObject{
     }
     update(){    //出第一帧每次执行
          
-    }
+    }timedelta
     on_destroy(){   // 删除前执行
 
     }
@@ -37,7 +37,7 @@ const step = timestamp => {          // 参数是当前时间
             obj.start()
         } else {
             obj.update()
-            this.timedelta = timestamp - last_timestamp
+            obj.timedelta = timestamp - last_timestamp
         }
     }
     last_timestamp = timestamp

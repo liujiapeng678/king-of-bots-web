@@ -9,7 +9,7 @@
 </template>
 <script>
 </script>
-<style>
+<style scoped>
 .content-field{
     margin-top: 5vh;
 }
