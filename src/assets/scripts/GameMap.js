@@ -20,6 +20,26 @@ export class GameMap extends AcGameObject {
         ]
     }
 
+    check_valid(cell){   // 检测目标点是否合法
+        for(const wall of this.walls){
+            if(cell.r === wall.r && cell.c === wall.c){
+                return false
+            }
+        }
+        for(const snake of this.snakes){
+            let len = snake.cells.length
+            if(!snake.check_tail_increasing()){  // 长度不增加蛇尾不用管
+                len--
+            }
+            for(let i = 0; i < len; i++){
+                if(snake.cells[i].r === cell.r && snake.cells[i].c === cell.c){
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
     add_listening_events(){
         this.ctx.canvas.focus()
 
