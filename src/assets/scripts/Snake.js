@@ -38,7 +38,7 @@ export class Snake extends AcGameObject {
     }
 
     check_tail_increasing(){  // 检测蛇长度增加
-        if(this.step <= 10)return true
+        //if(this.step <= 10)return true
         if(this.step % 3 === 1)return true
         return false
     } 
