@@ -53,11 +53,11 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 
 const route = useRoute()
 const route_path = computed(() => route.path)
-const store = useRoute()
+const store = useStore()
 
 const logout = () => {
     store.dispatch("logout")
