@@ -77,7 +77,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.meta.requestAuth && !store.state.is_login){
+  if(to.meta.requestAuth && !store.state.user.is_login){
     console.log(store.state.is_login)
     next("/user/account/login/") 
   } else {

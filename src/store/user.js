@@ -70,7 +70,7 @@ export default {
     },
     logout(context){
       context.commit("logout")
-    }
+    },
   },
   modules: {
   }
