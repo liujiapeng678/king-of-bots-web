@@ -39,6 +39,7 @@ export default {
         },
         success(resp) {
           if (resp.error_msg === "success") {
+            localStorage.setItem("jwt_token", resp.token)
             context.commit("updateToken", resp.token)
             data.success()
           } else {
@@ -70,6 +71,7 @@ export default {
     },
     logout(context){
       context.commit("logout")
+      localStorage.removeItem("jwt_token")
     },
   },
   modules: {
