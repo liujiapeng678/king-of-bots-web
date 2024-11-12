@@ -37,8 +37,8 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="bot-code" class="form-label">代码</label>
-                                            <textarea v-model="new_bot.code" class="form-control" id="bot-code" rows="7"
-                                                placeholder="请输入bot代码"></textarea>
+                                            <VAceEditor v-model:value="new_bot.code" @init="editorInit" lang="c_cpp"
+                                                theme="textmate" style="height: 300px" />
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -94,9 +94,9 @@
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="bot-code" class="form-label">代码</label>
-                                                            <textarea v-model="bot.code" class="form-control"
-                                                                id="bot-code" rows="7"
-                                                                placeholder="请输入bot代码"></textarea>
+                                                            <VAceEditor v-model:value="bot.code"
+                                                                @init="editorInit" lang="c_cpp" theme="textmate"
+                                                                style="height: 300px" />
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -126,6 +126,12 @@ import { useStore } from 'vuex';
 import $ from 'jquery'
 import { ref, onMounted, reactive } from 'vue'
 import { Modal } from 'bootstrap/dist/js/bootstrap';
+import { VAceEditor } from 'vue3-ace-editor';
+import ace from 'ace-builds';
+
+ace.config.set(
+    "basePath",
+    "https://cdn.jsdelivr.net/npm/ace-builds@" + require('ace-builds').version + "/src-noconflict/")
 
 const store = useStore()
 const bots = ref([])
@@ -224,7 +230,7 @@ const update_bot = (bot) => {
     })
 }
 
-onMounted(()=>{
+onMounted(() => {
     refresh_bots()
 })
 </script>
