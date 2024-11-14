@@ -61,6 +61,7 @@ const store = useStore()
 
 const logout = () => {
     store.dispatch("logout")
+    location.reload()
 }
 
 </script>
