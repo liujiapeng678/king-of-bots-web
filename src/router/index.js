@@ -6,6 +6,7 @@ import RecordIndexView from '@/views/record/RecordIndexView.vue'
 import UserBotsIndexView from '@/views/user/bots/UserBotsIndexView.vue'
 import UserAccountLoginView from '@/views/user/account/UserAccountLoginView.vue'
 import UserAccountRegisterView from '@/views/user/account/UserAccountRegisterView.vue'
+import FriendsIndexView from '@/views/friends/FriendsIndexView.vue'
 import store from '@/store/index'
 
 const routes = [
@@ -33,6 +34,13 @@ const routes = [
   {
     path: "/ranklist/",
     component: RankListIndexView,
+    meta: {
+      requestAuth: true,
+    }
+  },
+  {
+    path: "/friends/",
+    component: FriendsIndexView,
     meta: {
       requestAuth: true,
     }

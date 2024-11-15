@@ -19,6 +19,10 @@
                         <router-link :class="route_path == '/ranklist/' ? 'nav-link active' : 'nav-link'"
                             :to="'/ranklist/'">排行榜</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link :class="route_path == '/friends/' ? 'nav-link active' : 'nav-link'"
+                            :to="'/friends/'">我的好友</router-link>
+                    </li>
                 </ul>
                 <ul class="navbar-nav" v-if="$store.state.user.is_login">
                     <li class="nav-item dropdown">
