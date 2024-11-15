@@ -3,8 +3,11 @@
         <div class="row">
             <div class="col-3">
                 <div class="card" style="margin-top: 20px;">
-                    <div class="card-body">
+                    <div class="card-header">
                         <img :src="$store.state.user.photo" alt="个人头像" style="width: 100%;">
+                    </div>
+                    <div class="card-body">
+                        <span>{{ signature }}</span>
                     </div>
                 </div>
             </div>
@@ -293,9 +296,25 @@ const rating_sort = () => {
     }
 }
 
+// 个性签名
+
+const signature = ref("")
+const get_signature = () => {
+    $.ajax({
+        url: "http://localhost:3000/user/bot/getsignature/",
+        type: "get",
+        headers: {
+            Authorization: "Bearer " + store.state.user.token
+        },
+        success(resp) {
+            signature.value = resp.signature
+        },
+    })
+}
 
 onMounted(() => {
     refresh_bots()
+    get_signature()
 })
 </script>
 <style scoped>

@@ -26,7 +26,7 @@
                             data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{
                             $store.state.user.username }}</a>
                         <ul class="dropdown-menu">
-                            <li><router-link class="dropdown-item" :to="'/user/bots/'">我的bots</router-link></li>
+                            <li><router-link class="dropdown-item" :to="'/user/bots/'">个人中心</router-link></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
