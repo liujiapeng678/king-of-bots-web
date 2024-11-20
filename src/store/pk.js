@@ -4,6 +4,7 @@ export default {
     socket: null,
     opponent_name: "",
     opponent_photo: "",
+    game_map: null
   },
   getters: {
   },
@@ -17,6 +18,9 @@ export default {
     },
     updateStatus(state, status){
       state.status = status
+    },
+    updateGameMap(state, gameMap){
+      state.game_map = gameMap
     }
   },
   actions: {

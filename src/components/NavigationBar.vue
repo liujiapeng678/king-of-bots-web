@@ -25,6 +25,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav" v-if="$store.state.user.is_login">
+                    <div style="padding-right: 10px;">
+                        <img :src="$store.state.user.photo" alt="个人头像" style="width: 2.5vw; border-radius: 50%;">
+                    </div>
                     <li class="nav-item dropdown">
                         <a :class="route_path == '/user/bots/' ? 'nav-link dropdown-toggle active' : 'nav-link dropdown-toggle'"
                             data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{

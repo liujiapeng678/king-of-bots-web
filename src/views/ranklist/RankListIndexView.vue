@@ -8,5 +8,5 @@ import ContentField from "@/components/ContentField.vue"
 
 
 </script>
-<style>
+<style scoped>
 </style>

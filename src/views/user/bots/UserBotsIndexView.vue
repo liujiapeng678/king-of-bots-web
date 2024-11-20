@@ -8,6 +8,13 @@
                     </div>
                     <div class="card-body">
                         <span>{{ signature }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor"
+                            class="bi bi-pencil-square float-end change-signature" viewBox="0 0 16 16" @click="update_signature">
+                            <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -15,8 +22,10 @@
                 <div class="card" style="margin-top: 20px;">
                     <div class="card-header">
                         <span style="font-size: 130%;">我的Bots</span>
-                        <span :style="'margin-left: 31vw; color: ' + default_sort_color + ';'" class="sort" @click="default_sort">默认排序</span>
-                        <span :style="'padding-left: 1vw; color: ' + rating_sort_color + ';'" class="sort" @click="rating_sort">按天梯分排序 </span>
+                        <span :style="'margin-left: 31vw; color: ' + default_sort_color + ';'" class="sort"
+                            @click="default_sort">默认排序</span>
+                        <span :style="'padding-left: 1vw; color: ' + rating_sort_color + ';'" class="sort"
+                            @click="rating_sort">按天梯分排序 </span>
                         <span :style="'color: ' + up_color + ';'">↑</span>
                         <span :style="'color: ' + down_color + ';'">↓</span>
                         <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
@@ -139,7 +148,7 @@
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">取消</button>
                                                         <button type="button" class="btn btn-danger"
-                                                        @click="remove_bot(bot)">确认</button>
+                                                            @click="remove_bot(bot)">确认</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -273,7 +282,7 @@ const rating_sort_color = ref("gray")
 const up_color = ref("gray")
 const down_color = ref("gray")
 const default_sort = () => {
-    if(default_sort_color.value === "gray"){
+    if (default_sort_color.value === "gray") {
         default_sort_color.value = "black"
         rating_sort_color.value = "gray"
         up_color.value = "gray"
@@ -282,17 +291,17 @@ const default_sort = () => {
     sorted_bots.value = JSON.parse(JSON.stringify(bots.value))
 }
 const rating_sort = () => {
-    if(default_sort_color.value === "black"){
+    if (default_sort_color.value === "black") {
         rating_sort_color.value = "black"
         up_color.value = "black"
         default_sort_color.value = "gray"
     } else {
         [up_color.value, down_color.value] = [down_color.value, up_color.value]
     }
-    if(up_color.value === "black"){
-        sorted_bots.value.sort((a, b)=>b.rating - a.rating)
+    if (up_color.value === "black") {
+        sorted_bots.value.sort((a, b) => b.rating - a.rating)
     } else {
-        sorted_bots.value.sort((a, b)=>a.rating - b.rating)
+        sorted_bots.value.sort((a, b) => a.rating - b.rating)
     }
 }
 
@@ -311,6 +320,9 @@ const get_signature = () => {
         },
     })
 }
+const update_signature = () => {
+    alert("谁允许你改的")
+} 
 
 onMounted(() => {
     refresh_bots()
@@ -321,9 +333,14 @@ onMounted(() => {
 div.error-message {
     color: red;
 }
-.sort:hover{
+
+.sort:hover {
     cursor: pointer;
     user-select: none;
 }
-
+.change-signature:hover{
+    color: blue;
+    cursor: pointer;
+    user-select: none;
+}
 </style>

@@ -3,9 +3,10 @@ import { Wall } from "./Wall";
 import { Snake } from "./Snake";
 
 export class GameMap extends AcGameObject {
-    constructor(ctx, parent){
+    constructor(ctx, parent, store){
         super()
 
+        this.store = store
         this.ctx = ctx
         this.parent = parent
         this.L = 0
@@ -73,46 +74,9 @@ export class GameMap extends AcGameObject {
         return true
     }
 
-    check_connect(is_wall, sx, sy, tx, ty){
-        if(sx == tx && sy == ty)return true
-        is_wall[sx][sy] = true
-        const dx = [-1, 0, 1, 0], dy = [0, -1, 0, 1]
-        for(let i = 0; i < 4; i++){
-            let x = dx[i] + sx, y = dy[i] + sy
-            if(!is_wall[x][y] && this.check_connect(is_wall, x, y, tx, ty)){
-                return true
-            }
-        }
-        return false
-    }
     create_walls(){
-        const is_wall = []
-        for(let r = 0; r < this.rows; r++){
-            is_wall[r] = []
-            for(let c = 0; c < this.cols; c++){
-                is_wall[r][c] = false
-            }
-        }
-        //四周加障碍物
-        for(let r = 0; r < this.rows; r++){
-            is_wall[r][0] = is_wall[r][this.cols - 1] = true
-        }
-        for(let c = 0; c < this.cols; c++){
-            is_wall[0][c] = is_wall[this.rows - 1][c] = true
-        }
-        //内部随机
-        for(let i = 0; i < this.inner_walls_count / 2; i++){
-            for(let j = 0; j < 1000; j++){
-                let r = parseInt(Math.random() * this.rows)
-                let c = parseInt(Math.random() * this.cols)
-                if(is_wall[r][c] || is_wall[this.rows - 1 - r][this.cols - 1 - c])continue
-                if(r == this.rows - 2 && c == 1 || r == 1 && c == this.cols - 2)continue
-                is_wall[r][c] = is_wall[this.rows - 1 - r][this.cols - 1 - c] = true
-                break;
-            }
-        }
-        const is_wall_copy = JSON.parse(JSON.stringify(is_wall))
-        if(!this.check_connect(is_wall_copy, this.rows - 2, 1, 1, this.cols - 2))return false
+        const is_wall = this.store.state.pk.game_map
+
         for(let r = 0; r < this.rows; r++){
             for(let c = 0; c < this.cols; c++){
                 if(is_wall[r][c]){
@@ -120,7 +84,6 @@ export class GameMap extends AcGameObject {
                 }
             }
         }
-        return true
     }
 
 
@@ -129,11 +92,7 @@ export class GameMap extends AcGameObject {
 
 
     start(){
-        for(let i = 0; i < 1000; i++){
-            if(this.create_walls()){
-                break;
-            }
-        }
+        this.create_walls()
 
         this.add_listening_events()
     }

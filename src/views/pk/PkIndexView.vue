@@ -32,6 +32,7 @@ onMounted(()=>{
                 photo: data.opponent_photo
             })
             store.commit("updateStatus", "匹配成功")
+            store.commit("updateGameMap", data.game_map)
             setTimeout(()=>{
                 goToPlayGround.value = true
             }, 2000)
