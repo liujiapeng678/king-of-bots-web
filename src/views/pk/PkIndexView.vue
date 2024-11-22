@@ -16,26 +16,29 @@ const goToPlayGround = ref(false)
 
 onMounted(()=>{
     socket = new WebSocket(socketUrl)
-    store.commit("updateOpponent", {
-        name: "我的对手",
-        photo: "https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png"
-    })
     socket.onopen = () => {
         console.log("与服务器建立连接")
         store.commit("updateSocket", socket)
     }
     socket.onmessage = message => {
         const data = JSON.parse(message.data)
-        if(data.event === "match-found"){
+        if(data.game.event === "match-found"){
             store.commit("updateOpponent", {
                 name: data.opponent_name,
                 photo: data.opponent_photo
             })
             store.commit("updateStatus", "匹配成功")
-            store.commit("updateGameMap", data.game_map)
+            store.commit("updateGame", data.game)
             setTimeout(()=>{
                 goToPlayGround.value = true
             }, 2000)
+        } else if(data.event === "move"){
+            const game = store.state.pk.game_object
+            const [snakeA, snakeB] = game.snakes
+            snakeA.set_direction(data.a_move)
+            snakeB.set_direction(data.b_move)
+        } else if(data.event === "result"){
+          console.log(data)
         }
         console.log(data)
     }
@@ -47,6 +50,11 @@ onUnmounted(()=>{
     socket.close()
     goToPlayGround.value = false
     store.commit("updateStatus", "开始匹配")
+    store.commit("updateSocket", null)
+    store.commit("updateOpponent", {
+      name:"我的对手",
+      photo:"https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png"
+    })
 })
 </script>
 <style scoped>
