@@ -13,7 +13,7 @@ export class AcGameObject{
     }
     update(){    //出第一帧每次执行
          
-    }timedelta
+    }
     on_destroy(){   // 删除前执行
 
     }

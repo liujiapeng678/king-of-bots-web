@@ -18,10 +18,10 @@
             </div>
         </div>
         <div class="col-12" style="text-align: center; margin-top: 15vh;">
-            <button @click="switch_status" type="button" class="btn btn-warning btn-lg">
+            <v-btn @click="switch_status" size="x-large" rounded="xl" elevation="24">
                 <span v-if="$store.state.pk.status === '匹配中(再次点击取消)'" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 {{ $store.state.pk.status }}
-            </button>
+            </v-btn>
         </div>
        </div>
     </div>

@@ -1,9 +1,10 @@
 export default {
   state: {
-    status: "开始匹配",   //  表示未匹配,匹配成功表示正在pk
+    status: "开始匹配",   //  开始匹配 匹配中(再次点击取消)
 
     socket: null,
 
+    me:"",  //A B
     opponent_name: "我的对手",
     opponent_photo: "https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png",
 
@@ -16,6 +17,8 @@ export default {
     b_sy: 0,
 
     game_object: null,
+
+    loser: "none",   // none all A  B
   },
   getters: {
   },
@@ -32,7 +35,13 @@ export default {
       state.opponent_name = opponent.name
       state.opponent_photo = opponent.photo
     },
-
+    updateMe(state, me){
+      if(me === "A"){
+        state.me = "蓝"
+      } else {
+        state.me = "红"
+      }
+    },
     updateGame(state, game){
       state.map = game.map
       state.a_id = game.a_id
@@ -44,7 +53,10 @@ export default {
     },
     updateGameObject(state, game_object){
       state.game_object = game_object
-    }
+    },
+    updateLoser(state, loser){
+      state.loser = loser
+    },
   },
   actions: {
   },

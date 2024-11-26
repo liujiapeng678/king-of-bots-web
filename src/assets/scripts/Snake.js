@@ -54,6 +54,7 @@ export class Snake extends AcGameObject {
         const d = this.direction
         
         this.next_cell = new Cell(this.cells[0].r + this.dr[d], this.cells[0].c + this.dc[d])
+        this.eye_direction = d
         this.direction = -1
         this.status = "move"
         this.step++
@@ -63,11 +64,11 @@ export class Snake extends AcGameObject {
             this.cells[i] = JSON.parse(JSON.stringify(this.cells[i - 1]))
         }
 
-        if(!this.gamemap.check_valid(this.next_cell)){   // 目标格子会发生碰撞
-            this.status = "die"
-            return
-        }
-        this.eye_direction = d
+        // if(!this.gamemap.check_valid(this.next_cell)){   // 目标格子会发生碰撞
+        //     this.status = "die"
+        //     return
+        // }
+        //
     }
     update_move(){
         const dx = this.next_cell.x - this.cells[0].x, dy = this.next_cell.y - this.cells[0].y 
