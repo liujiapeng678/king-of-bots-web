@@ -55,12 +55,12 @@
                 </v-menu>
               </ul>
               <ul class="navbar-nav" v-else>
-                <li class="nav-item">
+                <li :class="route_path === '/user/account/login/' ? 'nav-item active' : 'nav-item'">
                   <router-link class="nav-link" :to="'/user/account/login/'" role="button">
                     登录
                   </router-link>
                 </li>
-                <li class="nav-item">
+                <li :class="route_path === '/user/account/register/' ? 'nav-item active' : 'nav-item'">
                   <router-link class="nav-link" :to="'/user/account/register/'" role="button">
                     注册
                   </router-link>
@@ -95,8 +95,8 @@ const logout = () => {
   content: ''; /* 必须设置，否则 :after 不会显示 */
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%; /* 横线宽度 */
+  left: 10%;
+  width: 80%; /* 横线宽度 */
   height: 2px; /* 横线高度 */
   background-color: white; /* 横线颜色 */
 }
@@ -105,5 +105,11 @@ const logout = () => {
 }
 .personal-avatar:hover{
   cursor: pointer;
+}
+.nav-item{
+  color: gray;
+}
+.active{
+  color: #c8c9c7;
 }
 </style>

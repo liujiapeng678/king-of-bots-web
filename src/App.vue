@@ -7,6 +7,7 @@
 import NavigationBar from "./components/NavigationBar.vue"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
+import "@mdi/font/css/materialdesignicons.min.css"
 
 
 </script>

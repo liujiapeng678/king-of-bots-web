@@ -28,8 +28,8 @@
                             @click="rating_sort">按天梯分排序 </span>
                         <span :style="'color: ' + up_color + ';'">↑</span>
                         <span :style="'color: ' + down_color + ';'">↓</span>
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                            data-bs-target="#add-bot-modal">创建Bot</button>
+                        <v-btn data-bs-toggle="modal" elevation="24"
+                               data-bs-target="#add-bot-modal" class="float-end">创建Bot</v-btn>
                         <!--通过id控制模态框-->
                         <!--modal-->
                         <div class="modal fade" id="add-bot-modal" tabindex="-1">
@@ -59,9 +59,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <div class="error-message">{{ new_bot.error_message }}</div>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary" @click="add_bot">创建</button>
+                                      <v-btn data-bs-dismiss="modal">关闭</v-btn>
+                                      <v-btn @click="add_bot">创建</v-btn>
                                     </div>
                                 </div>
                             </div>
@@ -85,9 +84,8 @@
                                     <td>{{ bot.rating }}</td>
                                     <td>{{ bot.createTime }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-secondary" style="margin-right: 10px;"
-                                            data-bs-toggle="modal"
-                                            :data-bs-target="'#update-bot-modal' + bot.id">修改</button>
+                                        <v-btn data-bs-toggle="modal"
+                                               :data-bs-target="'#update-bot-modal' + bot.id" style="margin-right: 10px;">修改</v-btn>
                                         <!--修改的模态框-->
                                         <div class="modal fade" :id="'update-bot-modal' + bot.id" tabindex="-1">
                                             <div class="modal-dialog modal-xl">
@@ -118,16 +116,13 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="error-message">{{ new_bot.error_message }}</div>
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">关闭</button>
-                                                        <button type="button" class="btn btn-primary"
-                                                            @click="update_bot(bot)">保存修改</button>
+                                                        <v-btn data-bs-dismiss="modal">关闭</v-btn>
+                                                        <v-btn @click="update_bot(bot)">保存修改</v-btn>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            :data-bs-target="'#remove-bot-modal' + bot.id">删除</button>
+                                        <v-btn data-bs-toggle="modal" :data-bs-target="'#remove-bot-modal' + bot.id">删除</v-btn>
                                         <!--删除的模态框-->
                                         <div class="modal fade" :id="'remove-bot-modal' + bot.id" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered">
@@ -145,10 +140,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">取消</button>
-                                                        <button type="button" class="btn btn-danger"
-                                                            @click="remove_bot(bot)">确认</button>
+                                                        <v-btn data-bs-dismiss="modal">取消</v-btn>
+                                                        <v-btn @click="remove_bot(bot)">确认</v-btn>
                                                     </div>
                                                 </div>
                                             </div>
