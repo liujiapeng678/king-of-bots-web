@@ -44,7 +44,6 @@ const fire_again = () => {
     event: "start-match",
     bot_id: store.state.pk.selected_bot
   }))
-  console.log("我操你小学")
 }
 const go_back = () => {
   emit("set_goToPlayGround", props.goToPlayGround)

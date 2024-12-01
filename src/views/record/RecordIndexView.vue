@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr v-for="record in records" :key="record.record.id">
-          <td>{{(records.length - record.record.id + 1) + (current_page - 1) * 20}}</td>
+          <td>{{total - record.record.id + 1}}</td>
           <td>
             <img :src="record.a_photo" alt="玩家A头像" class="record-user-photo">
             &nbsp;
@@ -32,22 +32,17 @@
         </tr>
         </tbody>
       </v-table>
-      <div class="text-center">
-        <v-pagination
-            v-model="current_page"
-            :length="Math.ceil(total/20)"
-            :total-visible="7"
-        >
-          <template v-slot:prev="props">
-            <v-btn @click="props.page--">上一页</v-btn>
-          </template>
-
-          <!-- 自定义下一页按钮 -->
-          <template v-slot:next="props">
-            <v-btn @click="props.page++">下一页</v-btn>
-          </template>
-        </v-pagination>
-      </div>
+      <ul class="pagination" style="float:right;margin-top:20px">
+        <li class="page-item" @click="click_page(current_page - 1)">
+          <a class="page-link" href="#" >前一页</a>   <!--href="#"为了让鼠标是手的形状 -->
+        </li>
+        <li :class="'page-item ' + page.is_active" v-for="page in pages" :key="page.number" @click="click_page(page.number)">
+          <a class="page-link" href="#">{{ page.number }}</a>
+        </li>
+        <li class="page-item" @click="click_page(current_page + 1)">
+          <a class="page-link" href="#">后一页</a>
+        </li>
+      </ul>
     </ContentField>
 </template>
 <script setup>
@@ -60,8 +55,10 @@ const store = useStore()
 let current_page = 1
 const records = ref([])
 let total = 0
+const pages = ref([])
 
 const get_page = page => {
+  current_page = page
   $.ajax({
     url: "http://localhost:3000/record/getlist/",
     type: "get",
@@ -74,12 +71,32 @@ const get_page = page => {
     success(resp) {
       records.value = resp.records
       total = resp.total
+      update_pages()
       console.log(resp)
     },
     error(resp) {
       console.log(resp)
     }
   })
+}
+const update_pages = () => {
+  let max_pages = Math.ceil(total / 20)
+  let new_pages = []
+  for(let i = current_page - 2; i <= current_page + 2; i++) {
+    if(i >= 1 && i <= max_pages){
+      new_pages.push({
+        number: i,
+        is_active: current_page === i ? "active" : ""
+      })
+    }
+  }
+  pages.value = new_pages
+}
+const click_page = (page) => {
+  let max_pages = Math.ceil(total / 20)
+  if(page >= 1 && page <= max_pages ){
+    get_page(page)
+  }
 }
 
 onMounted(()=>{
