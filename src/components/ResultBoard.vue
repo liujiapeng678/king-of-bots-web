@@ -41,8 +41,10 @@ const fire_again = () => {
   })
   store.commit("updateStatus", "匹配中(再次点击取消)")
   store.state.pk.socket.send(JSON.stringify({
-    event: "start-match"
+    event: "start-match",
+    bot_id: store.state.pk.selected_bot
   }))
+  console.log("我操你小学")
 }
 const go_back = () => {
   emit("set_goToPlayGround", props.goToPlayGround)

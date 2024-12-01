@@ -19,6 +19,8 @@ export default {
     game_object: null,
 
     loser: "none",   // none all A  B
+
+    selected_bot: -1   // pk选中的机器人编号，默认真人出战
   },
   getters: {
   },
@@ -57,6 +59,9 @@ export default {
     updateLoser(state, loser){
       state.loser = loser
     },
+    updateSelectedBot(state, selected_bot){
+      state.selected_bot = selected_bot
+    }
   },
   actions: {
   },

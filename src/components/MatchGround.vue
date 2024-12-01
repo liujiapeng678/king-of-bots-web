@@ -20,24 +20,38 @@
                 {{ $store.state.pk.opponent_name }}
             </div>
         </div>
-        <div class="col-5" style="margin-top: 14vh; display: flex;justify-content: flex-end;padding-right: 0;">
+        <div class="col-4" style="margin-top: 14vh; display: flex;justify-content: flex-end;padding-right: 0;">
             <v-btn @click="switch_status" class="custom-btn-left">
                 <v-icon>mdi-sword-cross</v-icon>&nbsp;
                 <span v-if="$store.state.pk.status === '匹配中(再次点击取消)'" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 {{ $store.state.pk.status }}
             </v-btn>
         </div>
-         <div class="col-2" style="padding-left: 1px;padding-right:1px;">
+         <div class="col-4" style="padding-left: 0.5px;padding-right:0.5px;">
            <v-select
-               clearable
                label="选择出战人员"
-               :items="[]"
+               :items="items"
                variant="solo"
                rounded="0"
                style="margin-top: 14vh;"
-           ></v-select>
+               v-model="$store.state.pk.selected_bot"
+               :readonly="is_readonly"
+           >
+             <template v-slot:append-item>
+               <v-divider class="mb-2"></v-divider>
+               <v-list-item
+                   :subtitle="subtitle"
+                   :title="title"
+                   disabled
+               >
+                 <template v-slot:prepend>
+                   <v-avatar color="primary" icon="mdi-robot-confused-outline"></v-avatar>
+                 </template>
+               </v-list-item>
+             </template>
+           </v-select>
          </div>
-         <div class="col-5" style="margin-top: 14vh; display: flex;justify-content: flex-start;padding-left: 0;">
+         <div class="col-4" style="margin-top: 14vh; display: flex;justify-content: flex-start;padding-left: 0;">
            <v-btn @click="switch_status" class="custom-btn-right">
              <span v-if="$store.state.pk.status === '匹配中(再次点击取消)'" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
              {{ $store.state.pk.status }}
@@ -49,15 +63,20 @@
 </template>
 <script setup>
 import { useStore } from 'vuex';
+import {onMounted, ref} from "vue";
+import $ from "jquery";
 
 const store = useStore()
 const switch_status = () => {
     if(store.state.pk.status === "开始匹配"){
+        is_readonly.value = true;
         store.commit("updateStatus", "匹配中(再次点击取消)")
         store.state.pk.socket.send(JSON.stringify({
-            event: "start-match"
+            event: "start-match",
+            bot_id: store.state.pk.selected_bot
         }))
     } else if(store.state.pk.status === "匹配中(再次点击取消)") {
+        is_readonly.value = false;
         store.commit("updateStatus", "开始匹配")
         store.state.pk.socket.send(JSON.stringify({
             event: "stop-match"
@@ -65,6 +84,38 @@ const switch_status = () => {
     }
 }
 
+const is_readonly = ref(false)
+const items = ref([{title: "亲自上阵", value: -1}])
+const bots = ref([])
+const refresh_items = () => {
+  $.ajax({
+    url: "http://localhost:3000/user/bot/getlist/",
+    type: "get",
+    headers: {
+      Authorization: "Bearer " + store.state.user.token
+    },
+    success(resp) {
+      bots.value = resp
+      for(let bot of bots.value){
+        const new_item = {title: bot.botName, value: bot.id}
+        items.value.push(new_item)
+      }
+    },
+    error(resp) {
+      bots.value = resp
+      for(let bot of bots.value){
+        const new_item = {title: bot.botName, value: bot.id}
+        items.value.push(new_item)
+      }
+    }
+  })
+}
+const title = '还没有bot？'
+const subtitle = '去个人中心创建你的第一个机器人！'
+
+onMounted(()=>{
+  refresh_items()
+})
 </script>
 <style scoped>
 div.matchground{
